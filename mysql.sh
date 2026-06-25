@@ -49,5 +49,13 @@ VALIDATE $? "Enabling of MySQL server" | tee -a $LOG_FILE
 systemctl start mysqld &>>$LOG_FILE
 VALIDATE $? "Started the MySQL" | tee -a $LOG_FILE
 
-mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOG_FILE
-VALIDATE $? "Setup MySQL Password" | tee -a $LOG_FILE
+mysql -h mysql.telugudevops.online -u root -pExpenseApp@1 -e "show databases"
+if [ $? -ne 0 ]
+then 
+    echo "MySQL password is not setup, going to be set"
+    mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOG_FILE
+    VALIDATE $? "Setup MySQL Password" | tee -a $LOG_FILE
+else
+    echo "MYSQL password alredy setup, SKKIPPING"
+fi
+
