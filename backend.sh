@@ -59,12 +59,11 @@ else
 fi
 
 mkdir -p /app &>>$LOG_FILE
-
-rm -rf /app/* &>>$LOG_FILE
 curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOG_FILE
 VALIDATE $? "Downloading backend applciation" | tee -a $LOG_FILE
 
 cd /app &>>$LOG_FILE 
+rm -rf /app/* &>>$LOG_FILE
 unzip /tmp/backend.zip &>>$LOG_FILE
 VALIDATE $? "Extracting Backend app file" | tee -a $LOG_FILE
 
