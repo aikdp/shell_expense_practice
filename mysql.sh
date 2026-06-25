@@ -56,6 +56,6 @@ then
     mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOG_FILE
     VALIDATE $? "Setup MySQL Password" | tee -a $LOG_FILE
 else
-    echo "MYSQL password alredy setup, SKKIPPING"
+    echo -e "MYSQL password alredy setup, $Y SKKIPPING $N"
 fi
 
