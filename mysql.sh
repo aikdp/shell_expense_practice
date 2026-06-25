@@ -40,8 +40,15 @@ VALIDATE(){
     fi    
 }
 
-dnf install mysql-server -y &>>$LOG_FILE
-VALIDATE $? "Installing MySQL server" | tee -a $LOG_FILE
+dnf list installed mysql-server &>>$LOG_FILE
+if [ $? -eq 0 ]
+then 
+    echo -e "$Y MYSQL SERVER is Already installed $N....Please ignore" | tee -a $LOG_FILE
+else
+    echo -e "MYSQL Server is not installed...$R Going to Install MYSQL Server $N" | tee -a $LOG_FILE
+    dnf install mysql-server -y &>>$LOG_FILE
+    VALIDATE $? "MYSQL installation"
+fi
 
 systemctl enable mysqld &>>$LOG_FILE
 VALIDATE $? "Enabling of MySQL server" | tee -a $LOG_FILE
