@@ -49,7 +49,7 @@ VALIDATE $? "Enabling of MySQL server" | tee -a $LOG_FILE
 systemctl start mysqld &>>$LOG_FILE
 VALIDATE $? "Started the MySQL" | tee -a $LOG_FILE
 
-mysql -h mysql.telugudevops.online -u root -pExpenseApp@1 -e "show databases"
+mysql -h mysql.telugudevops.online -u root -pExpenseApp@1 -e "show databases" &>>$LOG_FILE
 if [ $? -ne 0 ]
 then 
     echo "MySQL password is not setup, going to be set"
