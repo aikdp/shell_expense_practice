@@ -28,7 +28,7 @@ fi
 
 #Every time this will tell you the user when the script executing
 echo "Script started executed at:: $(date)"
-mkdir -p $LOG_FILE
+mkdir -p $LOG_FOLDER
 
 VALIDATE(){
     if [ $1 -ne 0 ]
