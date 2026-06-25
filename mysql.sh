@@ -28,6 +28,7 @@ fi
 
 #Every time this will tell you the user when the script executing
 echo "Script started executed at:: $(date)"
+mkdir -p $LOG_FILE
 
 VALIDATE(){
     if [ $1 -ne 0 ]
@@ -39,14 +40,14 @@ VALIDATE(){
     fi    
 }
 
-dnf install mysql-server -y
-VALIDATE $? "Installing MySQL server"
+dnf install mysql-server -y &>>$LOG_FILE
+VALIDATE $? "Installing MySQL server" | tee -a $LOG_FILE
 
-systemctl enable mysqld
-VALIDATE $? "Enabling of MySQL server"
+systemctl enable mysqld &>>$LOG_FILE
+VALIDATE $? "Enabling of MySQL server" | tee -a $LOG_FILE
 
-systemctl start mysqld
-VALIDATE $? "Started the MySQL"
+systemctl start mysqld &>>$LOG_FILE
+VALIDATE $? "Started the MySQL" | tee -a $LOG_FILE
 
-mysql_secure_installation --set-root-pass ExpenseApp@1
-VALIDATE $? "Setup MySQL Password"
+mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOG_FILE
+VALIDATE $? "Setup MySQL Password" | tee -a $LOG_FILE
